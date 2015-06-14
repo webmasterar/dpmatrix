@@ -18,7 +18,11 @@
 <form type="post" onsubmit="dpmatrix('here'); return false;">
 Type:
 String Matching <input type="radio" name="type" value="0" checked="checked">
-Edit Distance <input type="radio" name="type" value="1"><br>
+Needleman-Wunsch <input type="radio" name="type" value="1">
+Smith-Waterman <input type="radio" name="type" value="2"><br>
+Model: 
+Edit Distance <input type="radio" name="model" value="0" checked="checked">
+Hamming Distance <input type="radio" name="model" value="1"><br>
 <label for="t">Text:</label>
 <input name="t" id="t" type="text" style="width:90%"><br>
 <label for="x">Pattern/text 2:</label>
@@ -29,7 +33,9 @@ Penalties:
 <label for="ins">Insertion</label>
 <input name="ins" id="ins" type="text" size="5" value="1">
 <label for="del">Deletion</label>
-<input name="del" id="del" type="text" size="5" value="1"><br>
+<input name="del" id="del" type="text" size="5" value="1">
+<label for="mat" alt="Only used for Smith-Waterman">Match*</label>
+<input name="mat" id="mat" type="text" size="5" value="2"><br>
 <input type="submit" value="Submit">
 </form>
 
