@@ -1,2 +1,2 @@
-# dpmatrix
-Quick and dirty Dynamic Programming Matrix in Javascript implemented in linear space
+# DPMatrix
+A Dynamic Programming matrix previewer in a web page - [click here](http://webmasterar.github.io/dpmatrix) to use it.

@@ -8,9 +8,9 @@ function dpmatrix(element)
 {
     var el = document.getElementById(element);
     var type = null;
-    if (document.getElementsByName("type")[0].checked){type = 0;}
-    else if (document.getElementsByName("type")[1].checked){type = 1;}
-    else {type = 2;}
+    if(document.getElementsByName("type")[0].checked){type = 0;}
+    else if(document.getElementsByName("type")[1].checked){type = 1;}
+    else{type = 2;}
     var model = (document.getElementsByName("model")[0].checked) ? 0 : 1;
     var t = document.getElementById("t").value;
     var m = t.length;
@@ -41,7 +41,7 @@ function dpmatrix(element)
     var D1 = new Array(n + 1);
 
     //create top row of table
-    var s = "<table class=\"dpmatrix-table\" style=\"border:1px solid black\" border=\"1\" cellpadding=\"4\"><tr><thead>";
+    var s = "<table class=\"dpmatrix-table\"><tr><thead>";
     for (i = 0; i < m + 2; i++) {
         s += "<th scope=\"col\">";
         s += (i > 1) ? t[i - 2] : "&nbsp;";
@@ -50,7 +50,7 @@ function dpmatrix(element)
     s += "</thead></tr>";
 
     //insert next row of matrix
-    s += "<tr align=\"right\">";
+    s += "<tbody><tr>";
     for (i = -1; i < m + 1; i++) {
         if (i == -1) {
             s += "<th scope=\"row\">&nbsp;</th>";
@@ -62,7 +62,7 @@ function dpmatrix(element)
 
     //loop through t and x
     for (i = 1; i < n + 1; i++) {
-        s += "<tr align=\"right\">";
+        s += "<tr>";
         D1[0] = (type == 2) ? 0 : D0[0] + ins;
         for (j = -1; j < m + 1; j++) {
             if (j == -1) {
@@ -109,7 +109,7 @@ function dpmatrix(element)
     }
 
     //finish
-    s += "</table>";
+    s += "</tbody></table>";
 
     el.innerHTML = s;
 

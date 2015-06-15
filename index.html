@@ -9,38 +9,86 @@
  */
 -->
 <meta charset="utf-8">
+<title>DPMatrix: Dynamic Programming Matrix</title>
 <script type="text/javascript" src="dpmatrix.js"></script>
+<style type="text/css">
+body {font:12px "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+h1 {font-size:200%; margin:1% 2% 0;}
+/* dpmatrix form and table styles */
+.dpmatrix > ul > li {list-style:none; display:block; padding:0; margin:0; font-size:120%; clear:left;}
+.dpmatrix > ul > li ul li {list-style:none; display:inline; font-size:90%; float:left;}
+.dpmatrix input.text {width:95%;font:130% monospace;}
+.dpmatrix input[type^=text] {border:1px solid #BEBEBE; margin:2px 3px; padding:2px; transition:all 0.30s ease-in-out; -moz-transition:all 0.30s ease-in-out; outline:none;}
+.dpmatrix input[type^=submit] {background-color:#4B99AD; margin:1% 2%; padding:8px 15px 8px 15px; border:none; color:#fff; font: 120% bold sans-serif; box-shadow:0 0 2px #4B99AD;}
+.dpmatrix input[type^=submit]:hover {box-shadow:0 0 6px #4B99AD;}
+.dpmatrix input[type^=submit]:active {color:#000; box-shadow:none;}
+.dpmatrix-table {border:1px solid #606060; border-spacing:4px; font:130% monospace; z-index:1;overflow:hidden;}
+.dpmatrix-table tr th, .dpmatrix-table tr td {padding:3px; border:1px solid #a0a0a0; text-align:right; background:transparent;}
+.dpmatrix-table tbody tr td, .dpmatrix-table tbody tr th {position:relative;}
+.dpmatrix-table tbody tr td:hover::before {background:rgba(192,192,192,0.1); content:'\00a0'; height:100%; left:-5000px; position:absolute; top:0; width:10000px; z-index:-1;}
+.dpmatrix-table tbody tr td:hover::after {background:rgba(192,192,192,0.1); content:'\00a0'; height: 10000px; left:0; position:absolute; top:-5000px; width:100%; z-index:-1;}
+.dpmatrix-table tbody tr:hover td {background:rgba(192,192,192,0.1); cursor:default;}
+.dpmatrix-table tbody tr:hover td:active {background:rgba(192,0,0,0.1); cursor:default;}
+.dpmatrix-table tbody tr td:hover {background:rgba(75,153,173,0.2);}
+#dpmatrix-here {margin:2%;}
+/* fork on github styles */
+#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 35px;font-size:0.8rem;line-height:2rem;position:relative;transition:0.5s;}
+#forkongithub a:hover{background:#303030;color:#fff;}
+#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}
+#forkongithub a::after{bottom:1px;top:auto;}
+@media screen and (min-width:800px){
+    #forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}
+    #forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}
+}
+</style>
+<script type="text/javascript">
+window.onscroll = function() {
+    var op = (window.pageYOffset > 150) ? 0 : 1 - (window.pageYOffset / 150);
+    document.getElementById("forkongithub").style.opacity = op;
+    if (op > 0) {
+        document.getElementById("forkongithub").style.right = 0;
+    } else {
+        document.getElementById("forkongithub").style.right = "999999px";
+    }
+}
+</script>
 </head>
 <body>
 
-<h3>Dynamic Programming Matrix Previewer</h3>
+<span id="forkongithub"><a href="https://github.com/webmasterar/dpmatrix">Fork me on GitHub</a></span>
 
-<form type="post" onsubmit="dpmatrix('here'); return false;">
-Type:
-String Matching <input type="radio" name="type" value="0" checked="checked">
-Needleman-Wunsch <input type="radio" name="type" value="1">
-Smith-Waterman <input type="radio" name="type" value="2"><br>
-Model: 
-Edit Distance <input type="radio" name="model" value="0" checked="checked">
-Hamming Distance <input type="radio" name="model" value="1"><br>
-<label for="t">Text:</label>
-<input name="t" id="t" type="text" style="width:90%"><br>
-<label for="x">Pattern/text 2:</label>
-<input name="x" id="x" type="text" style="width:90%"><br>
-Penalties:
-<label for="sub">Substitution</label>
-<input name="sub" id="sub" type="text" size="5" value="1">
-<label for="ins">Insertion</label>
-<input name="ins" id="ins" type="text" size="5" value="1">
-<label for="del">Deletion</label>
-<input name="del" id="del" type="text" size="5" value="1">
-<label for="mat" alt="Only used for Smith-Waterman">Match*</label>
-<input name="mat" id="mat" type="text" size="5" value="2"><br>
-<input type="submit" value="Submit">
+<h1>Dynamic Programming Matrix Previewer</h1>
+
+<form type="post" action="#" class="dpmatrix" onsubmit="dpmatrix('dpmatrix-here');return false;">
+<ul>
+<li>Algorithm: <ul>
+    <li>Pattern Matching <input type="radio" name="type" value="0" checked="checked"></li>
+    <li>Needleman-Wunsch <input type="radio" name="type" value="1"></li>
+    <li>Smith-Waterman <input type="radio" name="type" value="2"></li>
+</ul></li>
+<li>Model: <ul>
+    <li>Edit Distance <input type="radio" name="model" value="0" checked="checked"></li>
+    <li>Hamming Distance <input type="radio" name="model" value="1"></li>
+</ul></li>
+<li><label for="t">Text:</label></li>
+<li><input name="t" id="t" type="text" class="text" required="required"></li>
+<li><label for="x">Pattern/text 2:</label></li>
+<li><input name="x" id="x" type="text" class="text" required="required"></li>
+<li>Penalties:<ul>
+    <li><label for="sub">Substitution</label></li>
+    <li><input name="sub" id="sub" type="text" size="5" value="1" required="required"></li>
+    <li><label for="ins">Insertion</label></li>
+    <li><input name="ins" id="ins" type="text" size="5" value="1" required="required"></li>
+    <li><label for="del">Deletion</label></li>
+    <li><input name="del" id="del" type="text" size="5" value="1" required="required"></li>
+    <li><label for="mat">Match*</label></li>
+    <li><input name="mat" id="mat" alt="Only used for Smith-Waterman" type="text" size="5" value="2" required="required"></li>
+</ul></li>
+<li><input type="submit" value="Submit"></li>
+</ul>
 </form>
 
-<p></p>
-<div id="here"></div>
+<div id="dpmatrix-here"></div>
 
 </body>
 </html>
