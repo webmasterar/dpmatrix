@@ -38,7 +38,7 @@ function dpmatrix(element)
     } else {
         for (i = 0; i < m + 1; i++){D0[i] = 0;}
     }
-    var D1 = new Array(n + 1);
+    var D1 = new Array(m + 1);
 
     //create top row of table
     var s = "<table class=\"dpmatrix-table\"><tr><thead>";
@@ -64,6 +64,7 @@ function dpmatrix(element)
     for (i = 1; i < n + 1; i++) {
         s += "<tr>";
         D1[0] = (type == 2) ? 0 : D0[0] + ins;
+
         for (j = -1; j < m + 1; j++) {
             if (j == -1) {
                 s += "<th scope=\"row\">" + x[i - 1] + "</th>";
@@ -75,8 +76,8 @@ function dpmatrix(element)
                         D1[j] = Math.min(
                             D0[j - 1] + ((t[j - 1] == x[i - 1]) ? 0 : sub),
                             Math.min(
-                                D0[j] + del,
-                                D1[j - 1] + ins
+                                D0[j] + ins,
+                                D1[j - 1] + del
                             )
                         );
                     } else {
@@ -84,8 +85,8 @@ function dpmatrix(element)
                             0,
                             D0[j - 1] + ((t[j - 1] == x[i - 1]) ? mat : sub),
                             Math.max(
-                                D0[j] + del,
-                                D1[j - 1] + ins
+                                D0[j] + ins,
+                                D1[j - 1] + del
                             )
                         )
                     }
@@ -96,6 +97,7 @@ function dpmatrix(element)
                         D1[j] = D0[j - 1] + ((t[j - 1] == x[i - 1]) ? mat : sub);
                     }
                 }
+
                 s += "<td>" + D1[j] + "</td>";
             }
         }

@@ -28,7 +28,7 @@ h1 {font-size:200%; margin:1% 2% 0;}
 .dpmatrix-table tbody tr td:hover::before {background:rgba(192,192,192,0.1); content:'\00a0'; height:100%; left:-5000px; position:absolute; top:0; width:10000px; z-index:-1;}
 .dpmatrix-table tbody tr td:hover::after {background:rgba(192,192,192,0.1); content:'\00a0'; height: 10000px; left:0; position:absolute; top:-5000px; width:100%; z-index:-1;}
 .dpmatrix-table tbody tr:hover td {background:rgba(192,192,192,0.1); cursor:default;}
-.dpmatrix-table tbody tr:hover td:active {background:rgba(192,0,0,0.1); cursor:default;}
+.dpmatrix-table tbody tr:hover td:active, .dpmatrix-table tbody tr td.hilite {background:rgba(192,0,0,0.1); cursor:default;}
 .dpmatrix-table tbody tr td:hover {background:rgba(75,153,173,0.2);}
 #dpmatrix-here {margin:2%;}
 /* fork on github styles */
@@ -51,6 +51,28 @@ window.onscroll = function() {
         document.getElementById("forkongithub").style.right = "999999px";
     }
 }
+function grayLocal() {
+    document.getElementById("mat").setAttribute("disabled", "disabled");
+}
+function grayHamming() {
+    if (document.getElementsByName("type")[2].checked) {
+        whiteLocal();
+    } else {
+        grayLocal();
+    }
+    document.getElementById("ins").setAttribute("disabled", "disabled");
+    document.getElementById("del").setAttribute("disabled", "disabled");
+}
+function whiteGlobal() {
+    grayLocal();
+    if (document.getElementsByName("model")[0].checked) {
+        document.getElementById("ins").removeAttribute("disabled");
+        document.getElementById("del").removeAttribute("disabled");
+    }
+}
+function whiteLocal() {
+    document.getElementById("mat").removeAttribute("disabled");
+}
 </script>
 </head>
 <body>
@@ -62,13 +84,13 @@ window.onscroll = function() {
 <form type="post" action="#" class="dpmatrix" onsubmit="dpmatrix('dpmatrix-here');return false;">
 <ul>
 <li>Algorithm: <ul>
-    <li>Pattern Matching <input type="radio" name="type" value="0" checked="checked"></li>
-    <li>Needleman-Wunsch <input type="radio" name="type" value="1"></li>
-    <li>Smith-Waterman <input type="radio" name="type" value="2"></li>
+    <li>Pattern Matching <input type="radio" name="type" value="0" checked="checked" onclick="whiteGlobal()"></li>
+    <li>Global Alignment <input type="radio" name="type" value="1" onclick="whiteGlobal()"></li>
+    <li>Local Alignment <input type="radio" name="type" value="2" onclick="whiteLocal()"></li>
 </ul></li>
 <li>Model: <ul>
-    <li>Edit Distance <input type="radio" name="model" value="0" checked="checked"></li>
-    <li>Hamming Distance <input type="radio" name="model" value="1"></li>
+    <li>Edit Distance <input type="radio" name="model" value="0" checked="checked" onclick="whiteGlobal()"></li>
+    <li>Hamming Distance <input type="radio" name="model" value="1" onclick="grayHamming();"></li>
 </ul></li>
 <li><label for="t">Text:</label></li>
 <li><input name="t" id="t" type="text" class="text" required="required"></li>
@@ -81,8 +103,8 @@ window.onscroll = function() {
     <li><input name="ins" id="ins" type="text" size="5" value="1" required="required"></li>
     <li><label for="del">Deletion</label></li>
     <li><input name="del" id="del" type="text" size="5" value="1" required="required"></li>
-    <li><label for="mat">Match*</label></li>
-    <li><input name="mat" id="mat" alt="Only used for Smith-Waterman" type="text" size="5" value="2" required="required"></li>
+    <li><label for="mat">Match</label></li>
+    <li><input name="mat" id="mat" disabled="disabled" type="text" size="5" value="2" required="required"></li>
 </ul></li>
 <li><input type="submit" value="Submit"></li>
 </ul>
